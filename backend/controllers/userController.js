@@ -112,7 +112,36 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
+const logoutUser = asyncHandler(async (req, res) => {
+  // there are some methods to logout
+  // we are going with expire the cookie
+  res.cookie("token", "", {
+    path: "/",
+    httpOnly: true,
+    expires: new Date(0),
+    sameSite: "none",
+    secure: true,
+  });
+  res.status(200).json({
+    msg: "Logged out successfully.",
+  });
+});
+
+const getUserData = asyncHandler(async (req, res) => {
+  const { _id, name, email, photo, phone, bio } = req.user;
+  res.status(200).json({
+    _id,
+    name,
+    email,
+    photo,
+    phone,
+    bio,
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
+  logoutUser,
+  getUserData,
 };

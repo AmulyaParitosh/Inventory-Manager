@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const userRoute = require("./routes/userRoute");
 const errorHandler = require("./middleware/errorMiddleware");
-
+const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -19,7 +19,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // Route Middleware
-app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 // Routes
 app.get("/", (req, res) => {

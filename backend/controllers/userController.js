@@ -70,10 +70,25 @@ const getUserData = asyncHandler(async (req, res) => {
   });
 });
 
-// const updateUser = asyncHandler(async (req, res) => {
-//   const
-//   res.send("updated");
-// });
+const updateUser = asyncHandler(async (req, res) => {
+  user = req.user;
+  const { _id, name, photo, phone, bio } = user;
+  user.name = req.body.name || name;
+  user.photo = req.body.photo || photo;
+  user.phone = req.body.phone || phone;
+  user.boi = req.body.bio || bio;
+
+  const updatedUser = await user.save();
+
+  res.status(204).json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    photo: updatedUser.photo,
+    phone: updatedUser.phone,
+    bio: updatedUser.bio,
+  });
+});
 
 module.exports = {
   registerUser,

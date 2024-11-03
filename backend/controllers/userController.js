@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { generateToken } = require("./authController");
+const bcrypt = require("bcryptjs");
 const User = require("../models/userModel");
 
 const registerUser = asyncHandler(async (req, res) => {
@@ -80,7 +81,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
   const updatedUser = await user.save();
 
-  res.status(204).json({
+  res.status(200).json({
     _id: updatedUser._id,
     name: updatedUser.name,
     email: updatedUser.email,
@@ -90,8 +91,35 @@ const updateUser = asyncHandler(async (req, res) => {
   });
 });
 
+const changePassword = asyncHandler(async (req, res) => {
+  const { current_password, new_password } = req.body;
+
+  if (!current_password || !new_password) {
+    res.status(400);
+    throw new Error("Please enter both current_password and new_password!");
+  }
+
+  const user = await User.findById(req.user._id);
+
+  const passwordIsCorrect = await bcrypt.compare(
+    current_password,
+    user.password
+  );
+
+  if (!passwordIsCorrect) {
+    res.status(400);
+    throw new Error("The current password does not match.");
+  }
+
+  user.password = new_password;
+  await user.save();
+
+  res.status(200).send("Password changed successfully.");
+});
+
 module.exports = {
   registerUser,
   getUserData,
   updateUser,
+  changePassword,
 };

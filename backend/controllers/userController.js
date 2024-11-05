@@ -117,9 +117,23 @@ const changePassword = asyncHandler(async (req, res) => {
   res.status(200).send("Password changed successfully.");
 });
 
+
+const forgotPassword = asyncHandler(async (req, res) => {
+  const email = req.body.email;
+
+  if (!email) {
+    res.status(400);
+    throw new Error("Please enter the email.");
+  }
+
+  res.send("test");
+});
+
+
 module.exports = {
   registerUser,
   getUserData,
   updateUser,
   changePassword,
+  forgotPassword,
 };

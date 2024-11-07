@@ -20,7 +20,5 @@ const tokenSchema = mongoos.Schema({
   },
 });
 
-const Token = mongoos.Model("Token", tokenSchema);
-module.exports = {
-  Token,
-};
+const Token = mongoos.model("Token", tokenSchema);
+module.exports = Token;

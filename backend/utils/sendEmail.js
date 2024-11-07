@@ -1,6 +1,6 @@
 const mailer = require("nodemailer");
 
-const sendEmail = async (from, to, subject, message) => {
+const sendEmail = async (from, to, subject, message, reply_to) => {
   const transporter = mailer.createTransport({
     service: "gmail",
     port: 587,
@@ -17,6 +17,7 @@ const sendEmail = async (from, to, subject, message) => {
     from,
     to,
     subject,
+    replyTo: reply_to,
     html: message,
   };
 

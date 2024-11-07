@@ -7,6 +7,8 @@ const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorMiddleware");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
+const contactRoute = require("./routes/contactRoute");
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
@@ -21,6 +23,7 @@ app.use(cors());
 // Route Middleware
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
+app.use("/api/contactus", contactRoute);
 
 // Routes
 app.get("/", (req, res) => {

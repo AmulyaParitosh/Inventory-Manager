@@ -8,6 +8,7 @@ const errorHandler = require("./middleware/errorMiddleware");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const contactRoute = require("./routes/contactRoute");
+const productRoute = require("./routes/productRoute");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/contactus", contactRoute);
+app.use("/api/products", productRoute);
 
 // Routes
 app.get("/", (req, res) => {
